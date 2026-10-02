@@ -23,7 +23,7 @@
 </div>
 
 ---
-
+[![Скачать QuickSearch](https://img.shields.io/badge/⬇_Скачать_QuickSearch-v1.0.0-34D399?style=for-the-badge&logo=github&logoColor=white)](https://github.com/alalal68-wq/QuickSearch/releases/download/v1.0.0/QuickSearch-v1.0.0.zip)
 ## 📑 Содержание
 
 - [О проекте](#-о-проекте)
