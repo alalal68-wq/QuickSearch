@@ -1,0 +1,174 @@
+<Window x:Class="QuickSearch.App.Views.MainSearchWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:vm="clr-namespace:QuickSearch.App.ViewModels"
+        xmlns:conv="clr-namespace:QuickSearch.App.Converters"
+        Title="QuickSearch"
+        SizeToContent="Height"
+        Width="680"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        Background="Transparent"
+        ResizeMode="NoResize"
+        ShowInTaskbar="False"
+        Topmost="True"
+        Deactivated="Window_Deactivated"
+        KeyDown="Window_KeyDown">
+
+    <Window.DataContext>
+        <vm:MainSearchViewModel/>
+    </Window.DataContext>
+
+    <Window.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVis"/>
+        <conv:SearchResultTypeToIconConverter x:Key="ResultIconConverter"/>
+    </Window.Resources>
+
+    <!-- The window itself has no visible chrome; everything visible is drawn by the
+         two Borders below, so the whole app is exactly as tall as its content:
+         just the search bar when idle, plus the results panel once there's something to show. -->
+    <StackPanel>
+        <Border x:Name="AudioBarsContainer" Height="44" Margin="0,0,0,8" Background="Transparent" Padding="8,6">
+            <StackPanel x:Name="AudioBarsPanel" Orientation="Horizontal" HorizontalAlignment="Stretch"/>
+        </Border>
+
+        <!-- Search Bar: the compact, always-visible part of the app -->
+        <Border x:Name="SearchBarBorder"
+                Height="64"
+                CornerRadius="20"
+                Background="#EE0F131C"
+                Padding="8,0">
+            <Border.Effect>
+                <DropShadowEffect Color="Black" BlurRadius="30" ShadowDepth="0" Opacity="0.5"/>
+            </Border.Effect>
+
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Mode: Files (folder icon) -->
+                <RadioButton Grid.Column="0"
+                            Style="{StaticResource ModeToggleStyle}"
+                            GroupName="SearchMode"
+                            Width="44" Height="44"
+                            Margin="0,0,6,0"
+                            IsChecked="{Binding CurrentMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Files}"
+                            ToolTip="Search Files (Tab to switch)">
+                    <TextBlock Text="&#xE8B7;"
+                               FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets"
+                               FontSize="20" Foreground="White"
+                               HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </RadioButton>
+
+                <!-- Mode: Web (globe icon) -->
+                <RadioButton Grid.Column="1"
+                            Style="{StaticResource ModeToggleStyle}"
+                            GroupName="SearchMode"
+                            Width="44" Height="44"
+                            Margin="0,0,10,0"
+                            IsChecked="{Binding CurrentMode, Converter={StaticResource EnumToBoolConverter}, ConverterParameter=Web}"
+                            ToolTip="Search Web (Tab to switch)">
+                    <TextBlock Text="&#xE774;"
+                               FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets"
+                               FontSize="20" Foreground="White"
+                               HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </RadioButton>
+
+                <!-- Search Box -->
+                <TextBox x:Name="SearchBox"
+                        Grid.Column="2"
+                        Style="{StaticResource SearchBoxStyle}"
+                        Text="{Binding SearchQuery, UpdateSourceTrigger=PropertyChanged}"
+                        VerticalContentAlignment="Center"/>
+
+                <!-- Settings Button (cat icon) -->
+                <Button Grid.Column="3"
+                        Style="{StaticResource SettingsButtonStyle}"
+                        Width="44" Height="44"
+                        Margin="10,0,0,0"
+                        ToolTip="Settings"
+                        Click="SettingsButton_Click">
+                    <Image Source="/Assets/cat-icon.png" Width="32" Height="32"
+                           RenderOptions.BitmapScalingMode="HighQuality"
+                           HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                </Button>
+            </Grid>
+        </Border>
+
+        <!-- Results Panel: takes zero space and is invisible until there's something to show -->
+        <Border x:Name="ResultsPanel"
+                CornerRadius="20"
+                Background="#EE0F131C"
+                Margin="0,8,0,0"
+                Padding="8"
+                MaxHeight="{Binding ResultsMaxHeight, RelativeSource={RelativeSource AncestorType=Window}}"
+                Visibility="{Binding HasResults, Converter={StaticResource BoolToVis}}">
+            <Border.Effect>
+                <DropShadowEffect Color="Black" BlurRadius="30" ShadowDepth="0" Opacity="0.5"/>
+            </Border.Effect>
+
+            <Grid>
+                <ListBox x:Name="ResultsListBox"
+                        Style="{StaticResource ResultsListBoxStyle}"
+                        ItemsSource="{Binding SearchResults}"
+                        SelectedItem="{Binding SelectedResult}"
+                        ItemContainerStyle="{StaticResource ResultItemStyle}"
+                        MouseDoubleClick="ResultsListBox_MouseDoubleClick"
+                        VirtualizingPanel.IsVirtualizing="True"
+                        VirtualizingPanel.VirtualizationMode="Recycling">
+                    <ListBox.ItemTemplate>
+                        <DataTemplate>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="Auto"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <!-- Icon: each result type gets a matching Segoe icon inside a rounded square -->
+                                <Border Grid.Column="0"
+                                       Width="32" Height="32"
+                                       Background="{StaticResource Surface3Brush}"
+                                       CornerRadius="8"
+                                       Margin="0,0,12,0">
+                                    <TextBlock Text="{Binding Type, Converter={StaticResource ResultIconConverter}}"
+                                               FontFamily="Segoe Fluent Icons, Segoe MDL2 Assets"
+                                               FontSize="16" Foreground="White"
+                                               HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                </Border>
+
+                                <!-- Text Content -->
+                                <StackPanel Grid.Column="1" VerticalAlignment="Center">
+                                    <TextBlock Text="{Binding Title}"
+                                             Foreground="{StaticResource TextPrimaryBrush}"
+                                             FontFamily="{StaticResource BodyFont}"
+                                             FontSize="14"
+                                             TextTrimming="CharacterEllipsis"/>
+                                    <TextBlock Text="{Binding Subtitle}"
+                                             Foreground="{StaticResource TextSecondaryBrush}"
+                                             FontFamily="{StaticResource BodyFont}"
+                                             FontSize="12"
+                                             TextTrimming="CharacterEllipsis"
+                                             Margin="0,2,0,0"
+                                             Visibility="{Binding Subtitle, Converter={StaticResource NullToVisibilityConverter}}"/>
+                                </StackPanel>
+                            </Grid>
+                        </DataTemplate>
+                    </ListBox.ItemTemplate>
+                </ListBox>
+
+                <!-- Loading Indicator -->
+                <TextBlock Text="Searching..."
+                          Foreground="{StaticResource TextMutedBrush}"
+                          FontFamily="{StaticResource BodyFont}"
+                          FontSize="14"
+                          HorizontalAlignment="Center"
+                          VerticalAlignment="Center"
+                          Visibility="{Binding IsSearching, Converter={StaticResource BoolToVis}}"/>
+            </Grid>
+        </Border>
+    </StackPanel>
+</Window>

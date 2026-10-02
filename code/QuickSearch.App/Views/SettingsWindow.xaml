@@ -1,0 +1,1009 @@
+<Window x:Class="QuickSearch.App.Views.SettingsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="QuickSearch — Настройки" Width="900" Height="740"
+        WindowStyle="None" AllowsTransparency="True" Background="Transparent"
+        ResizeMode="NoResize" WindowStartupLocation="CenterScreen" ShowInTaskbar="False"
+        UseLayoutRounding="True" TextOptions.TextFormattingMode="Display">
+    <Window.Resources>
+        <FontFamily x:Key="IconFont">Segoe Fluent Icons, Segoe MDL2 Assets</FontFamily>
+
+        <!-- Lucide icons (ISC license, https://lucide.dev) — 24x24 stroke icons -->
+        <Geometry x:Key="IcoSettings">M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915 M9 12A3 3 0 1 0 15 12A3 3 0 1 0 9 12Z</Geometry>
+        <Geometry x:Key="IcoDrive">M10 16h.01 M2.212 11.577a2 2 0 0 0-.212.896V18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-5.527a2 2 0 0 0-.212-.896L18.55 5.11A2 2 0 0 0 16.76 4H7.24a2 2 0 0 0-1.79 1.11z M21.946 12.013H2.054 M6 16h.01</Geometry>
+        <Geometry x:Key="IcoAudio">M2 10v3 M6 6v11 M10 3v18 M14 8v7 M18 5v13 M22 10v3</Geometry>
+        <Geometry x:Key="IcoImage">M5 3H19A2 2 0 0 1 21 5V19A2 2 0 0 1 19 21H5A2 2 0 0 1 3 19V5A2 2 0 0 1 5 3Z M7 9A2 2 0 1 0 11 9A2 2 0 1 0 7 9Z M21 15 l -3.086-3.086a2 2 0 0 0-2.828 0L6 21</Geometry>
+        <Geometry x:Key="IcoBrush">M14.622 17.897 l -10.68-2.913 M18.376 2.622a1 1 0 1 1 3.002 3.002L17.36 9.643a.5.5 0 0 0 0 .707l.944.944a2.41 2.41 0 0 1 0 3.408l-.944.944a.5.5 0 0 1-.707 0L8.354 7.348a.5.5 0 0 1 0-.707l.944-.944a2.41 2.41 0 0 1 3.408 0l.944.944a.5.5 0 0 0 .707 0z M9 8c-1.804 2.71-3.97 3.46-6.583 3.948a.507.507 0 0 0-.302.819l7.32 8.883a1 1 0 0 0 1.185.204C12.735 20.405 16 16.792 16 15</Geometry>
+        <Geometry x:Key="IcoGlobe">M2 12A10 10 0 1 0 22 12A10 10 0 1 0 2 12Z M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20 M2 12h20</Geometry>
+        <Geometry x:Key="IcoClose">M18 6 6 18 M6 6 l 12 12</Geometry>
+        <Geometry x:Key="IcoCheck">M20 6 9 17l-5-5</Geometry>
+        <Geometry x:Key="IcoFolder">M6 14 l 1.5-2.9A2 2 0 0 1 9.24 10H20a2 2 0 0 1 1.94 2.5l-1.54 6a2 2 0 0 1-1.95 1.5H4a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h3.9a2 2 0 0 1 1.69.9l.81 1.2a2 2 0 0 0 1.67.9H18a2 2 0 0 1 2 2v2</Geometry>
+        <Geometry x:Key="IcoTrash">M10 11v6 M14 11v6 M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6 M3 6h18 M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2</Geometry>
+        <Geometry x:Key="IcoInfo">M2 12A10 10 0 1 0 22 12A10 10 0 1 0 2 12Z M12 16v-4 M12 8h.01</Geometry>
+        <Geometry x:Key="IcoSearch">M21 21 l -4.34-4.34 M3 11A8 8 0 1 0 19 11A8 8 0 1 0 3 11Z</Geometry>
+        <Geometry x:Key="IcoCompass">M2 12A10 10 0 1 0 22 12A10 10 0 1 0 2 12Z M16.24 7.76 l -1.804 5.411a2 2 0 0 1-1.265 1.265L7.76 16.24l1.804-5.411a2 2 0 0 1 1.265-1.265z</Geometry>
+        <Style x:Key="Ico" TargetType="Control">
+            <Setter Property="Width" Value="16"/>
+            <Setter Property="Height" Value="16"/>
+            <Setter Property="IsTabStop" Value="False"/>
+            <Setter Property="Focusable" Value="False"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Control">
+                        <Viewbox Stretch="Uniform">
+                            <Canvas Width="24" Height="24">
+                                <Path Data="{Binding Tag, RelativeSource={RelativeSource TemplatedParent}}"
+                                      Stroke="{Binding Foreground, RelativeSource={RelativeSource TemplatedParent}}"
+                                      StrokeThickness="2" StrokeStartLineCap="Round" StrokeEndLineCap="Round" StrokeLineJoin="Round"/>
+                            </Canvas>
+                        </Viewbox>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+        <Style x:Key="BadgeIcon" TargetType="Control" BasedOn="{StaticResource Ico}">
+            <Setter Property="Width" Value="21"/>
+            <Setter Property="Height" Value="21"/>
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="VerticalAlignment" Value="Center"/>
+        </Style>
+
+        <!-- Gradients -->
+        <LinearGradientBrush x:Key="AccentGradient" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#FF38BDF8" Offset="0"/>
+            <GradientStop Color="#FF818CF8" Offset="1"/>
+        </LinearGradientBrush>
+        <LinearGradientBrush x:Key="BadgeCyan" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#FF38BDF8" Offset="0"/><GradientStop Color="#FF2563EB" Offset="1"/>
+        </LinearGradientBrush>
+        <LinearGradientBrush x:Key="BadgePink" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#FFF472B6" Offset="0"/><GradientStop Color="#FFA855F7" Offset="1"/>
+        </LinearGradientBrush>
+        <LinearGradientBrush x:Key="BadgeGreen" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#FF34D399" Offset="0"/><GradientStop Color="#FF0EA5E9" Offset="1"/>
+        </LinearGradientBrush>
+        <LinearGradientBrush x:Key="BadgeAmber" StartPoint="0,0" EndPoint="1,1">
+            <GradientStop Color="#FFFBBF24" Offset="0"/><GradientStop Color="#FFF97316" Offset="1"/>
+        </LinearGradientBrush>
+
+        <!-- Card with animated hover glow -->
+        <Style x:Key="Card" TargetType="Border">
+            <Setter Property="Background">
+                <Setter.Value><SolidColorBrush Color="#59192231"/></Setter.Value>
+            </Setter>
+            <Setter Property="BorderBrush">
+                <Setter.Value><SolidColorBrush Color="#1FFFFFFF"/></Setter.Value>
+            </Setter>
+            <Setter Property="BorderThickness" Value="1"/>
+            <Setter Property="CornerRadius" Value="18"/>
+            <Setter Property="Padding" Value="22,20"/>
+            <Setter Property="Margin" Value="0,0,0,16"/>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Trigger.EnterActions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <ColorAnimation Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)" To="#7738BDF8" Duration="0:0:0.25"/>
+                                <ColorAnimation Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" To="#73202B3D" Duration="0:0:0.25"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </Trigger.EnterActions>
+                    <Trigger.ExitActions>
+                        <BeginStoryboard>
+                            <Storyboard>
+                                <ColorAnimation Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)" To="#1FFFFFFF" Duration="0:0:0.4"/>
+                                <ColorAnimation Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" To="#59192231" Duration="0:0:0.4"/>
+                            </Storyboard>
+                        </BeginStoryboard>
+                    </Trigger.ExitActions>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="Badge" TargetType="Border">
+            <Setter Property="Width" Value="42"/>
+            <Setter Property="Height" Value="42"/>
+            <Setter Property="CornerRadius" Value="13"/>
+            <Setter Property="VerticalAlignment" Value="Top"/>
+            <Setter Property="Margin" Value="0,0,16,0"/>
+        </Style>
+        <Style x:Key="SectionNum" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="#FF55D3F7"/>
+            <Setter Property="FontSize" Value="11"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+        </Style>
+        <Style x:Key="Section" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="#FFF7FAFF"/>
+            <Setter Property="FontSize" Value="18"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Margin" Value="0,1,0,4"/>
+        </Style>
+        <Style x:Key="Hint" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="#FFAFBDD0"/>
+            <Setter Property="FontSize" Value="13"/>
+            <Setter Property="TextWrapping" Value="Wrap"/>
+            <Setter Property="LineHeight" Value="19"/>
+            <Setter Property="Margin" Value="0,0,0,12"/>
+        </Style>
+        <Style x:Key="Label" TargetType="TextBlock">
+            <Setter Property="Foreground" Value="#FFD5DCE6"/>
+            <Setter Property="FontSize" Value="12.5"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Margin" Value="2,0,0,7"/>
+        </Style>
+        <Style x:Key="Divider" TargetType="Border">
+            <Setter Property="Height" Value="1"/>
+            <Setter Property="Background" Value="#14FFFFFF"/>
+            <Setter Property="Margin" Value="0,14,0,14"/>
+        </Style>
+
+        <!-- iOS-style toggle switch with sliding knob -->
+        <Style x:Key="SwitchRow" TargetType="CheckBox">
+            <Setter Property="Foreground" Value="#FFF4F7FB"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Margin" Value="-12,0,-12,2"/>
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="CheckBox">
+                        <Border x:Name="Row" CornerRadius="12" Padding="12,10">
+                            <Border.Background><SolidColorBrush Color="#00FFFFFF"/></Border.Background>
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="Auto"/>
+                                </Grid.ColumnDefinitions>
+                                <ContentPresenter VerticalAlignment="Center" Margin="0,0,18,0" RecognizesAccessKey="True">
+                                    <ContentPresenter.Resources>
+                                        <Style TargetType="TextBlock"><Setter Property="TextWrapping" Value="Wrap"/></Style>
+                                    </ContentPresenter.Resources>
+                                </ContentPresenter>
+                                <Grid Grid.Column="1" Width="46" Height="26" VerticalAlignment="Center">
+                                    <Border x:Name="Track" CornerRadius="13" BorderThickness="1">
+                                        <Border.Background><SolidColorBrush Color="#FF283246"/></Border.Background>
+                                        <Border.BorderBrush><SolidColorBrush Color="#40FFFFFF"/></Border.BorderBrush>
+                                    </Border>
+                                    <Ellipse x:Name="Knob" Width="20" Height="20" HorizontalAlignment="Left" Margin="3,0,0,0" RenderTransformOrigin="0.5,0.5">
+                                        <Ellipse.Fill><SolidColorBrush Color="#FFC9D3E1"/></Ellipse.Fill>
+                                        <Ellipse.RenderTransform>
+                                            <TransformGroup>
+                                                <ScaleTransform/>
+                                                <TranslateTransform/>
+                                            </TransformGroup>
+                                        </Ellipse.RenderTransform>
+                                        <Ellipse.Effect><DropShadowEffect BlurRadius="6" ShadowDepth="1" Opacity="0.45"/></Ellipse.Effect>
+                                    </Ellipse>
+                                </Grid>
+                            </Grid>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Trigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetName="Knob" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[1].(TranslateTransform.X)" To="20" Duration="0:0:0.32">
+                                                <DoubleAnimation.EasingFunction><BackEase EasingMode="EaseOut" Amplitude="0.45"/></DoubleAnimation.EasingFunction>
+                                            </DoubleAnimation>
+                                            <ColorAnimation Storyboard.TargetName="Track" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" To="#FF38BDF8" Duration="0:0:0.25"/>
+                                            <ColorAnimation Storyboard.TargetName="Track" Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)" To="#FF7DD3FC" Duration="0:0:0.25"/>
+                                            <ColorAnimation Storyboard.TargetName="Knob" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)" To="#FFFFFFFF" Duration="0:0:0.25"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.EnterActions>
+                                <Trigger.ExitActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetName="Knob" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[1].(TranslateTransform.X)" To="0" Duration="0:0:0.32">
+                                                <DoubleAnimation.EasingFunction><BackEase EasingMode="EaseOut" Amplitude="0.45"/></DoubleAnimation.EasingFunction>
+                                            </DoubleAnimation>
+                                            <ColorAnimation Storyboard.TargetName="Track" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" To="#FF283246" Duration="0:0:0.25"/>
+                                            <ColorAnimation Storyboard.TargetName="Track" Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)" To="#40FFFFFF" Duration="0:0:0.25"/>
+                                            <ColorAnimation Storyboard.TargetName="Knob" Storyboard.TargetProperty="(Shape.Fill).(SolidColorBrush.Color)" To="#FFC9D3E1" Duration="0:0:0.25"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.ExitActions>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Trigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <ColorAnimation Storyboard.TargetName="Row" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" To="#12FFFFFF" Duration="0:0:0.18"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.EnterActions>
+                                <Trigger.ExitActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <ColorAnimation Storyboard.TargetName="Row" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" To="#00FFFFFF" Duration="0:0:0.3"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.ExitActions>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Trigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetName="Knob" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)" To="1.15" Duration="0:0:0.12"/>
+                                            <DoubleAnimation Storyboard.TargetName="Knob" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)" To="0.9" Duration="0:0:0.12"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.EnterActions>
+                                <Trigger.ExitActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetName="Knob" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleX)" To="1" Duration="0:0:0.2"/>
+                                            <DoubleAnimation Storyboard.TargetName="Knob" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[0].(ScaleTransform.ScaleY)" To="1" Duration="0:0:0.2"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.ExitActions>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Opacity" Value="0.45"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Segmented chips (window size) -->
+        <Style x:Key="SegChip" TargetType="RadioButton">
+            <Setter Property="Foreground" Value="#FFD5DCE6"/>
+            <Setter Property="FontSize" Value="13.5"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Margin" Value="0,0,10,0"/>
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="RadioButton">
+                        <Border x:Name="Chip" CornerRadius="12" BorderThickness="1" Padding="20,10" RenderTransformOrigin="0.5,0.5">
+                            <Border.Background><SolidColorBrush Color="#FF1C2433"/></Border.Background>
+                            <Border.BorderBrush><SolidColorBrush Color="#26FFFFFF"/></Border.BorderBrush>
+                            <Border.RenderTransform><ScaleTransform/></Border.RenderTransform>
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter Property="Foreground" Value="White"/>
+                                <Trigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <ColorAnimation Storyboard.TargetName="Chip" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" To="#4038BDF8" Duration="0:0:0.25"/>
+                                            <ColorAnimation Storyboard.TargetName="Chip" Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)" To="#FF38BDF8" Duration="0:0:0.25"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.EnterActions>
+                                <Trigger.ExitActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <ColorAnimation Storyboard.TargetName="Chip" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" To="#FF1C2433" Duration="0:0:0.25"/>
+                                            <ColorAnimation Storyboard.TargetName="Chip" Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)" To="#26FFFFFF" Duration="0:0:0.25"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.ExitActions>
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Trigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetName="Chip" Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)" To="1.05" Duration="0:0:0.18"/>
+                                            <DoubleAnimation Storyboard.TargetName="Chip" Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)" To="1.05" Duration="0:0:0.18"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.EnterActions>
+                                <Trigger.ExitActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetName="Chip" Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)" To="1" Duration="0:0:0.22"/>
+                                            <DoubleAnimation Storyboard.TargetName="Chip" Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)" To="1" Duration="0:0:0.22"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.ExitActions>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Sidebar navigation item -->
+        <Style x:Key="NavItem" TargetType="RadioButton">
+            <Setter Property="GroupName" Value="SettingsNav"/>
+            <Setter Property="Foreground" Value="#FFAFBDD0"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="Margin" Value="0,0,0,4"/>
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="RadioButton">
+                        <Grid>
+                            <Border x:Name="Bd" CornerRadius="12" Padding="14,11">
+                                <Border.Background><SolidColorBrush Color="#00FFFFFF"/></Border.Background>
+                                <StackPanel Orientation="Horizontal">
+                                    <Control x:Name="Ico" Style="{StaticResource Ico}" Tag="{Binding Tag, RelativeSource={RelativeSource TemplatedParent}}"
+                                                 Width="18" Height="18" Margin="2,0,14,0" VerticalAlignment="Center"/>
+                                    <ContentPresenter VerticalAlignment="Center"/>
+                                </StackPanel>
+                            </Border>
+                            <Border x:Name="Bar" Width="3" Height="20" CornerRadius="2" HorizontalAlignment="Left" Margin="2,0,0,0"
+                                    Background="{StaticResource AccentGradient}" RenderTransformOrigin="0.5,0.5">
+                                <Border.RenderTransform><ScaleTransform ScaleY="0"/></Border.RenderTransform>
+                            </Border>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Foreground" Value="#FFF4F7FB"/>
+                            </Trigger>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter Property="Foreground" Value="White"/>
+                                <Setter TargetName="Ico" Property="Foreground" Value="#FF55D3F7"/>
+                                <Trigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetName="Bar" Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)" To="1" Duration="0:0:0.35">
+                                                <DoubleAnimation.EasingFunction><BackEase EasingMode="EaseOut" Amplitude="0.5"/></DoubleAnimation.EasingFunction>
+                                            </DoubleAnimation>
+                                            <ColorAnimation Storyboard.TargetName="Bd" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" To="#2638BDF8" Duration="0:0:0.25"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.EnterActions>
+                                <Trigger.ExitActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetName="Bar" Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)" To="0" Duration="0:0:0.2"/>
+                                            <ColorAnimation Storyboard.TargetName="Bd" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" To="#00FFFFFF" Duration="0:0:0.25"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.ExitActions>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Secondary button -->
+        <Style x:Key="GhostButton" TargetType="Button">
+            <Setter Property="Foreground" Value="#FFF4F7FB"/>
+            <Setter Property="FontSize" Value="13.5"/>
+            <Setter Property="FontWeight" Value="SemiBold"/>
+            <Setter Property="Padding" Value="18,10"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Bd" CornerRadius="12" BorderThickness="1" Padding="{TemplateBinding Padding}" RenderTransformOrigin="0.5,0.5">
+                            <Border.Background><SolidColorBrush Color="#1AFFFFFF"/></Border.Background>
+                            <Border.BorderBrush><SolidColorBrush Color="#2EFFFFFF"/></Border.BorderBrush>
+                            <Border.RenderTransform><ScaleTransform/></Border.RenderTransform>
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Trigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <ColorAnimation Storyboard.TargetName="Bd" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" To="#33FFFFFF" Duration="0:0:0.18"/>
+                                            <ColorAnimation Storyboard.TargetName="Bd" Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)" To="#66FFFFFF" Duration="0:0:0.18"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.EnterActions>
+                                <Trigger.ExitActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <ColorAnimation Storyboard.TargetName="Bd" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" To="#1AFFFFFF" Duration="0:0:0.3"/>
+                                            <ColorAnimation Storyboard.TargetName="Bd" Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)" To="#2EFFFFFF" Duration="0:0:0.3"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.ExitActions>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Trigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetName="Bd" Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)" To="0.95" Duration="0:0:0.08"/>
+                                            <DoubleAnimation Storyboard.TargetName="Bd" Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)" To="0.95" Duration="0:0:0.08"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.EnterActions>
+                                <Trigger.ExitActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetName="Bd" Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)" To="1" Duration="0:0:0.25">
+                                                <DoubleAnimation.EasingFunction><BackEase EasingMode="EaseOut"/></DoubleAnimation.EasingFunction>
+                                            </DoubleAnimation>
+                                            <DoubleAnimation Storyboard.TargetName="Bd" Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)" To="1" Duration="0:0:0.25">
+                                                <DoubleAnimation.EasingFunction><BackEase EasingMode="EaseOut"/></DoubleAnimation.EasingFunction>
+                                            </DoubleAnimation>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.ExitActions>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Opacity" Value="0.4"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Save button: fully transparent (glass), thin border only -->
+        <Style x:Key="SaveButton" TargetType="Button">
+            <Setter Property="Foreground" Value="#FFF4F7FB"/>
+            <Setter Property="FontSize" Value="13.5"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Padding" Value="34,10"/>
+            <Setter Property="MinWidth" Value="130"/>
+            <Setter Property="HorizontalContentAlignment" Value="Center"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Bd" CornerRadius="12" BorderThickness="1" Padding="{TemplateBinding Padding}" RenderTransformOrigin="0.5,0.5">
+                            <Border.Background><SolidColorBrush Color="#00FFFFFF"/></Border.Background>
+                            <Border.BorderBrush><SolidColorBrush Color="#2EFFFFFF"/></Border.BorderBrush>
+                            <Border.RenderTransform><ScaleTransform/></Border.RenderTransform>
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Trigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <ColorAnimation Storyboard.TargetName="Bd" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" To="#1FFFFFFF" Duration="0:0:0.18"/>
+                                            <ColorAnimation Storyboard.TargetName="Bd" Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)" To="#66FFFFFF" Duration="0:0:0.18"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.EnterActions>
+                                <Trigger.ExitActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <ColorAnimation Storyboard.TargetName="Bd" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" To="#00FFFFFF" Duration="0:0:0.3"/>
+                                            <ColorAnimation Storyboard.TargetName="Bd" Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)" To="#2EFFFFFF" Duration="0:0:0.3"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.ExitActions>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Trigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetName="Bd" Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)" To="0.95" Duration="0:0:0.08"/>
+                                            <DoubleAnimation Storyboard.TargetName="Bd" Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)" To="0.95" Duration="0:0:0.08"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.EnterActions>
+                                <Trigger.ExitActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetName="Bd" Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)" To="1" Duration="0:0:0.25">
+                                                <DoubleAnimation.EasingFunction><BackEase EasingMode="EaseOut"/></DoubleAnimation.EasingFunction>
+                                            </DoubleAnimation>
+                                            <DoubleAnimation Storyboard.TargetName="Bd" Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)" To="1" Duration="0:0:0.25">
+                                                <DoubleAnimation.EasingFunction><BackEase EasingMode="EaseOut"/></DoubleAnimation.EasingFunction>
+                                            </DoubleAnimation>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.ExitActions>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Opacity" Value="0.4"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Primary button: gradient, glow and a light sweep on hover -->
+        <Style x:Key="GlowButton" TargetType="Button">
+            <Setter Property="Foreground" Value="#FF061018"/>
+            <Setter Property="FontSize" Value="13.5"/>
+            <Setter Property="FontWeight" Value="Bold"/>
+            <Setter Property="Padding" Value="26,10"/>
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Grid x:Name="Root" RenderTransformOrigin="0.5,0.5">
+                            <Grid.RenderTransform><ScaleTransform/></Grid.RenderTransform>
+                            <Border x:Name="Bd" CornerRadius="12" Background="{StaticResource AccentGradient}">
+                                <Border.Effect><DropShadowEffect Color="#FF38BDF8" BlurRadius="18" ShadowDepth="0" Opacity="0.35"/></Border.Effect>
+                            </Border>
+                            <Border CornerRadius="12" ClipToBounds="True">
+                                <Rectangle x:Name="Shine" Width="46" HorizontalAlignment="Left" RenderTransformOrigin="0.5,0.5" IsHitTestVisible="False">
+                                    <Rectangle.Fill>
+                                        <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
+                                            <GradientStop Color="#00FFFFFF" Offset="0"/>
+                                            <GradientStop Color="#8CFFFFFF" Offset="0.5"/>
+                                            <GradientStop Color="#00FFFFFF" Offset="1"/>
+                                        </LinearGradientBrush>
+                                    </Rectangle.Fill>
+                                    <Rectangle.RenderTransform>
+                                        <TransformGroup>
+                                            <SkewTransform AngleX="-20"/>
+                                            <TranslateTransform X="-80"/>
+                                        </TransformGroup>
+                                    </Rectangle.RenderTransform>
+                                </Rectangle>
+                            </Border>
+                            <ContentPresenter Margin="{TemplateBinding Padding}" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Trigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetName="Shine" Storyboard.TargetProperty="(UIElement.RenderTransform).(TransformGroup.Children)[1].(TranslateTransform.X)" From="-80" To="220" Duration="0:0:0.65">
+                                                <DoubleAnimation.EasingFunction><CubicEase EasingMode="EaseInOut"/></DoubleAnimation.EasingFunction>
+                                            </DoubleAnimation>
+                                            <DoubleAnimation Storyboard.TargetName="Bd" Storyboard.TargetProperty="(UIElement.Effect).(DropShadowEffect.Opacity)" To="0.8" Duration="0:0:0.25"/>
+                                            <DoubleAnimation Storyboard.TargetName="Bd" Storyboard.TargetProperty="(UIElement.Effect).(DropShadowEffect.BlurRadius)" To="28" Duration="0:0:0.25"/>
+                                            <DoubleAnimation Storyboard.TargetName="Root" Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)" To="1.04" Duration="0:0:0.2"/>
+                                            <DoubleAnimation Storyboard.TargetName="Root" Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)" To="1.04" Duration="0:0:0.2"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.EnterActions>
+                                <Trigger.ExitActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetName="Bd" Storyboard.TargetProperty="(UIElement.Effect).(DropShadowEffect.Opacity)" To="0.35" Duration="0:0:0.3"/>
+                                            <DoubleAnimation Storyboard.TargetName="Bd" Storyboard.TargetProperty="(UIElement.Effect).(DropShadowEffect.BlurRadius)" To="18" Duration="0:0:0.3"/>
+                                            <DoubleAnimation Storyboard.TargetName="Root" Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleX)" To="1" Duration="0:0:0.25"/>
+                                            <DoubleAnimation Storyboard.TargetName="Root" Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)" To="1" Duration="0:0:0.25"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.ExitActions>
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="Root" Property="Opacity" Value="0.85"/>
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Opacity" Value="0.4"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Round close button that spins on hover -->
+        <Style x:Key="CloseButton" TargetType="Button">
+            <Setter Property="Cursor" Value="Hand"/>
+            <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="Bd" Width="38" Height="38" CornerRadius="19" BorderThickness="1" RenderTransformOrigin="0.5,0.5">
+                            <Border.Background><SolidColorBrush Color="#1AFFFFFF"/></Border.Background>
+                            <Border.BorderBrush><SolidColorBrush Color="#2EFFFFFF"/></Border.BorderBrush>
+                            <Border.RenderTransform><RotateTransform/></Border.RenderTransform>
+                            <Control Style="{StaticResource Ico}" Tag="{StaticResource IcoClose}" Width="16" Height="16" Foreground="White"
+                                     HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Trigger.EnterActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetName="Bd" Storyboard.TargetProperty="(UIElement.RenderTransform).(RotateTransform.Angle)" To="90" Duration="0:0:0.3">
+                                                <DoubleAnimation.EasingFunction><CubicEase EasingMode="EaseOut"/></DoubleAnimation.EasingFunction>
+                                            </DoubleAnimation>
+                                            <ColorAnimation Storyboard.TargetName="Bd" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" To="#CCEF4444" Duration="0:0:0.2"/>
+                                            <ColorAnimation Storyboard.TargetName="Bd" Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)" To="#FFF87171" Duration="0:0:0.2"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.EnterActions>
+                                <Trigger.ExitActions>
+                                    <BeginStoryboard>
+                                        <Storyboard>
+                                            <DoubleAnimation Storyboard.TargetName="Bd" Storyboard.TargetProperty="(UIElement.RenderTransform).(RotateTransform.Angle)" To="0" Duration="0:0:0.3">
+                                                <DoubleAnimation.EasingFunction><CubicEase EasingMode="EaseOut"/></DoubleAnimation.EasingFunction>
+                                            </DoubleAnimation>
+                                            <ColorAnimation Storyboard.TargetName="Bd" Storyboard.TargetProperty="(Border.Background).(SolidColorBrush.Color)" To="#1AFFFFFF" Duration="0:0:0.25"/>
+                                            <ColorAnimation Storyboard.TargetName="Bd" Storyboard.TargetProperty="(Border.BorderBrush).(SolidColorBrush.Color)" To="#2EFFFFFF" Duration="0:0:0.25"/>
+                                        </Storyboard>
+                                    </BeginStoryboard>
+                                </Trigger.ExitActions>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <!-- Sub-options that fade when their parent switch is off -->
+        <Style x:Key="FadePanel" TargetType="StackPanel">
+            <Style.Triggers>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Trigger.EnterActions>
+                        <BeginStoryboard>
+                            <Storyboard><DoubleAnimation Storyboard.TargetProperty="Opacity" To="0.4" Duration="0:0:0.3"/></Storyboard>
+                        </BeginStoryboard>
+                    </Trigger.EnterActions>
+                    <Trigger.ExitActions>
+                        <BeginStoryboard>
+                            <Storyboard><DoubleAnimation Storyboard.TargetProperty="Opacity" To="1" Duration="0:0:0.3"/></Storyboard>
+                        </BeginStoryboard>
+                    </Trigger.ExitActions>
+                </Trigger>
+            </Style.Triggers>
+        </Style>
+
+        <Style x:Key="EqBar" TargetType="Rectangle">
+            <Setter Property="Width" Value="3.5"/>
+            <Setter Property="Height" Value="20"/>
+            <Setter Property="RadiusX" Value="1.75"/>
+            <Setter Property="RadiusY" Value="1.75"/>
+            <Setter Property="Margin" Value="1.2,0"/>
+            <Setter Property="VerticalAlignment" Value="Bottom"/>
+            <Setter Property="RenderTransformOrigin" Value="0.5,1"/>
+        </Style>
+    </Window.Resources>
+
+    <Window.Triggers>
+        <EventTrigger RoutedEvent="Window.Loaded">
+            <BeginStoryboard>
+                <Storyboard>
+                    <!-- Slowly drifting aurora glows -->
+                    <PointAnimation Storyboard.TargetName="AuroraA" Storyboard.TargetProperty="(Border.Background).(RadialGradientBrush.Center)"
+                                    From="0.1,0.05" To="0.45,0.3" Duration="0:0:9" AutoReverse="True" RepeatBehavior="Forever">
+                        <PointAnimation.EasingFunction><SineEase EasingMode="EaseInOut"/></PointAnimation.EasingFunction>
+                    </PointAnimation>
+                    <PointAnimation Storyboard.TargetName="AuroraA" Storyboard.TargetProperty="(Border.Background).(RadialGradientBrush.GradientOrigin)"
+                                    From="0.1,0.05" To="0.45,0.3" Duration="0:0:9" AutoReverse="True" RepeatBehavior="Forever">
+                        <PointAnimation.EasingFunction><SineEase EasingMode="EaseInOut"/></PointAnimation.EasingFunction>
+                    </PointAnimation>
+                    <PointAnimation Storyboard.TargetName="AuroraB" Storyboard.TargetProperty="(Border.Background).(RadialGradientBrush.Center)"
+                                    From="0.95,0.95" To="0.6,0.65" Duration="0:0:11" AutoReverse="True" RepeatBehavior="Forever">
+                        <PointAnimation.EasingFunction><SineEase EasingMode="EaseInOut"/></PointAnimation.EasingFunction>
+                    </PointAnimation>
+                    <PointAnimation Storyboard.TargetName="AuroraB" Storyboard.TargetProperty="(Border.Background).(RadialGradientBrush.GradientOrigin)"
+                                    From="0.95,0.95" To="0.6,0.65" Duration="0:0:11" AutoReverse="True" RepeatBehavior="Forever">
+                        <PointAnimation.EasingFunction><SineEase EasingMode="EaseInOut"/></PointAnimation.EasingFunction>
+                    </PointAnimation>
+                    <!-- Light running along the top edge -->
+                    <DoubleAnimation Storyboard.TargetName="TopLine" Storyboard.TargetProperty="(Border.Background).(Brush.RelativeTransform).(TranslateTransform.X)"
+                                     From="-1" To="1" Duration="0:0:4" RepeatBehavior="Forever"/>
+                    <!-- Title shimmer -->
+                    <DoubleAnimation Storyboard.TargetName="TitleText" Storyboard.TargetProperty="(TextBlock.Foreground).(Brush.RelativeTransform).(TranslateTransform.X)"
+                                     From="-1.2" To="1.2" Duration="0:0:5" RepeatBehavior="Forever"/>
+                    <!-- Mini equalizer in the audio badge -->
+                    <DoubleAnimation Storyboard.TargetName="Eq1" Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)" From="0.25" To="0.9" Duration="0:0:0.45" AutoReverse="True" RepeatBehavior="Forever"/>
+                    <DoubleAnimation Storyboard.TargetName="Eq2" Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)" From="0.8" To="0.3" Duration="0:0:0.38" AutoReverse="True" RepeatBehavior="Forever"/>
+                    <DoubleAnimation Storyboard.TargetName="Eq3" Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)" From="0.35" To="1" Duration="0:0:0.52" AutoReverse="True" RepeatBehavior="Forever"/>
+                    <DoubleAnimation Storyboard.TargetName="Eq4" Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)" From="0.9" To="0.4" Duration="0:0:0.41" AutoReverse="True" RepeatBehavior="Forever"/>
+                    <DoubleAnimation Storyboard.TargetName="Eq5" Storyboard.TargetProperty="(UIElement.RenderTransform).(ScaleTransform.ScaleY)" From="0.3" To="0.75" Duration="0:0:0.36" AutoReverse="True" RepeatBehavior="Forever"/>
+                </Storyboard>
+            </BeginStoryboard>
+        </EventTrigger>
+    </Window.Triggers>
+
+    <Grid x:Name="Shell" Margin="18" Opacity="0" RenderTransformOrigin="0.5,0.5">
+        <Grid.RenderTransform>
+            <TransformGroup>
+                <ScaleTransform x:Name="ShellScale" ScaleX="0.94" ScaleY="0.94"/>
+                <TranslateTransform x:Name="ShellShift" Y="16"/>
+            </TransformGroup>
+        </Grid.RenderTransform>
+
+        <!-- Background (wallpaper preview is applied to RootBorder from code) -->
+        <Border x:Name="RootBorder" Background="#E60A0E15" CornerRadius="22">
+            <Border.Effect><DropShadowEffect Color="Black" BlurRadius="36" Opacity="0.6" ShadowDepth="0"/></Border.Effect>
+        </Border>
+        <Border x:Name="AuroraA" CornerRadius="22" IsHitTestVisible="False">
+            <Border.Background>
+                <RadialGradientBrush RadiusX="0.6" RadiusY="0.7" Center="0.1,0.05" GradientOrigin="0.1,0.05">
+                    <GradientStop Color="#3338BDF8" Offset="0"/>
+                    <GradientStop Color="#0038BDF8" Offset="1"/>
+                </RadialGradientBrush>
+            </Border.Background>
+        </Border>
+        <Border x:Name="AuroraB" CornerRadius="22" IsHitTestVisible="False">
+            <Border.Background>
+                <RadialGradientBrush RadiusX="0.6" RadiusY="0.7" Center="0.95,0.95" GradientOrigin="0.95,0.95">
+                    <GradientStop Color="#2EA855F7" Offset="0"/>
+                    <GradientStop Color="#00A855F7" Offset="1"/>
+                </RadialGradientBrush>
+            </Border.Background>
+        </Border>
+        <Border CornerRadius="22" BorderBrush="#2EFFFFFF" BorderThickness="1" IsHitTestVisible="False"/>
+        <Border x:Name="TopLine" Height="1.5" VerticalAlignment="Top" Margin="40,0" IsHitTestVisible="False">
+            <Border.Background>
+                <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
+                    <LinearGradientBrush.RelativeTransform><TranslateTransform/></LinearGradientBrush.RelativeTransform>
+                    <GradientStop Color="#0038BDF8" Offset="0"/>
+                    <GradientStop Color="#FF38BDF8" Offset="0.4"/>
+                    <GradientStop Color="#FFA78BFA" Offset="0.6"/>
+                    <GradientStop Color="#00A78BFA" Offset="1"/>
+                </LinearGradientBrush>
+            </Border.Background>
+        </Border>
+
+        <Grid Margin="26,24,26,22">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition Height="*"/>
+                <RowDefinition Height="Auto"/>
+            </Grid.RowDefinitions>
+
+            <!-- Header -->
+            <Grid Grid.Row="0" Margin="0,0,0,20" Background="Transparent" MouseLeftButtonDown="Header_MouseLeftButtonDown">
+                <StackPanel Orientation="Horizontal">
+                    <Border Width="50" Height="50" CornerRadius="15" Background="Transparent" Margin="0,0,16,0">
+                        <Control Style="{StaticResource Ico}" Tag="{StaticResource IcoSettings}" Width="34" Height="34" Foreground="White"
+                                 HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                    </Border>
+                    <StackPanel VerticalAlignment="Center">
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Text="QUICKSEARCH  /  ПАРАМЕТРЫ" Foreground="#FF55D3F7" FontSize="11" FontWeight="Bold"/>
+                        </StackPanel>
+                        <TextBlock x:Name="TitleText" Text="Настройки" FontSize="28" FontWeight="SemiBold" Margin="0,2,0,0">
+                            <TextBlock.Foreground>
+                                <LinearGradientBrush StartPoint="0,0.5" EndPoint="1,0.5">
+                                    <LinearGradientBrush.RelativeTransform><TranslateTransform/></LinearGradientBrush.RelativeTransform>
+                                    <GradientStop Color="#FFFFFFFF" Offset="0"/>
+                                    <GradientStop Color="#FFFFFFFF" Offset="0.35"/>
+                                    <GradientStop Color="#FF7DD3FC" Offset="0.5"/>
+                                    <GradientStop Color="#FFC4B5FD" Offset="0.6"/>
+                                    <GradientStop Color="#FFFFFFFF" Offset="0.75"/>
+                                    <GradientStop Color="#FFFFFFFF" Offset="1"/>
+                                </LinearGradientBrush>
+                            </TextBlock.Foreground>
+                        </TextBlock>
+                    </StackPanel>
+                </StackPanel>
+                <Button Style="{StaticResource CloseButton}" HorizontalAlignment="Right" VerticalAlignment="Top" ToolTip="Закрыть (Esc)" Click="CloseButton_Click"/>
+            </Grid>
+
+            <!-- Body: sidebar + cards -->
+            <Grid Grid.Row="1">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="200"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel x:Name="NavPanel" Grid.Column="0" Margin="0,0,18,0">
+                    <RadioButton x:Name="NavDrives" Style="{StaticResource NavItem}" Content="Диски" Tag="{StaticResource IcoDrive}" IsChecked="True" Click="Nav_Click"/>
+                    <RadioButton x:Name="NavAudio" Style="{StaticResource NavItem}" Content="Звук" Tag="{StaticResource IcoAudio}" Click="Nav_Click"/>
+                    <RadioButton x:Name="NavBackground" Style="{StaticResource NavItem}" Content="Фон" Tag="{StaticResource IcoImage}" Click="Nav_Click"/>
+                    <RadioButton x:Name="NavInterface" Style="{StaticResource NavItem}" Content="Интерфейс" Tag="{StaticResource IcoBrush}" Click="Nav_Click"/>
+                    <RadioButton x:Name="NavWeb" Style="{StaticResource NavItem}" Content="Интернет" Tag="{StaticResource IcoGlobe}" Click="Nav_Click"/>
+                </StackPanel>
+
+                <ScrollViewer x:Name="Scroller" Grid.Column="1" VerticalScrollBarVisibility="Auto" HorizontalScrollBarVisibility="Disabled">
+                    <StackPanel x:Name="CardsPanel" Margin="0,0,10,0">
+
+                        <!-- 01 Drives -->
+                        <Border x:Name="CardDrives" Style="{StaticResource Card}">
+                            <StackPanel>
+                                <DockPanel Margin="0,0,0,14">
+                                    <Border Style="{StaticResource Badge}" Background="{StaticResource BadgeCyan}">
+                                        <Control Style="{StaticResource BadgeIcon}" Tag="{StaticResource IcoDrive}"/>
+                                    </Border>
+                                    <StackPanel>
+                                        <TextBlock Text="01" Style="{StaticResource SectionNum}"/>
+                                        <TextBlock Text="Диски для поиска" Style="{StaticResource Section}"/>
+                                        <TextBlock Text="Выберите один или несколько дисков. Поиск выполняется только по подключённым дискам, индексация новых дисков идёт в фоне." Style="{StaticResource Hint}" Margin="0"/>
+                                    </StackPanel>
+                                </DockPanel>
+                                <ListBox x:Name="DrivesList" Background="Transparent" BorderThickness="0" Foreground="White" MaxHeight="170" Margin="0,0,0,8"
+                                         ScrollViewer.HorizontalScrollBarVisibility="Disabled">
+                                    <ListBox.ItemTemplate>
+                                        <DataTemplate>
+                                            <CheckBox IsChecked="{Binding IsSelected, Mode=TwoWay}" Style="{StaticResource SwitchRow}">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Control Style="{StaticResource Ico}" Tag="{StaticResource IcoDrive}" Width="17" Height="17" Foreground="#FF55D3F7" Margin="0,0,10,0" VerticalAlignment="Center"/>
+                                                    <TextBlock Text="{Binding Label}" VerticalAlignment="Center"/>
+                                                </StackPanel>
+                                            </CheckBox>
+                                        </DataTemplate>
+                                    </ListBox.ItemTemplate>
+                                    <ListBox.ItemContainerStyle>
+                                        <Style TargetType="ListBoxItem">
+                                            <Setter Property="Focusable" Value="False"/>
+                                            <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                                            <Setter Property="Template">
+                                                <Setter.Value>
+                                                    <ControlTemplate TargetType="ListBoxItem">
+                                                        <ContentPresenter Margin="12,0"/>
+                                                    </ControlTemplate>
+                                                </Setter.Value>
+                                            </Setter>
+                                        </Style>
+                                    </ListBox.ItemContainerStyle>
+                                </ListBox>
+                                <StackPanel Orientation="Horizontal">
+                                    <Control Style="{StaticResource Ico}" Tag="{StaticResource IcoInfo}" Width="14" Height="14" Foreground="#FF8B9AB0" Margin="0,1,8,0"/>
+                                    <TextBlock Text="Диски, которых сейчас нет в системе, не индексируются." Style="{StaticResource Hint}" Foreground="#FF8B9AB0" Margin="0"/>
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- 02 Audio visualisation -->
+                        <Border x:Name="CardAudio" Style="{StaticResource Card}">
+                            <StackPanel>
+                                <DockPanel Margin="0,0,0,10">
+                                    <Border Style="{StaticResource Badge}" Background="#FF141B28" BorderBrush="#33FFFFFF" BorderThickness="1">
+                                        <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" VerticalAlignment="Center" Height="20">
+                                            <Rectangle x:Name="Eq1" Style="{StaticResource EqBar}" Fill="#FF38BDF8"><Rectangle.RenderTransform><ScaleTransform ScaleY="0.5"/></Rectangle.RenderTransform></Rectangle>
+                                            <Rectangle x:Name="Eq2" Style="{StaticResource EqBar}" Fill="#FF38BDF8"><Rectangle.RenderTransform><ScaleTransform ScaleY="0.8"/></Rectangle.RenderTransform></Rectangle>
+                                            <Rectangle x:Name="Eq3" Style="{StaticResource EqBar}" Fill="#FF38BDF8"><Rectangle.RenderTransform><ScaleTransform ScaleY="1"/></Rectangle.RenderTransform></Rectangle>
+                                            <Rectangle x:Name="Eq4" Style="{StaticResource EqBar}" Fill="#FF38BDF8"><Rectangle.RenderTransform><ScaleTransform ScaleY="0.6"/></Rectangle.RenderTransform></Rectangle>
+                                            <Rectangle x:Name="Eq5" Style="{StaticResource EqBar}" Fill="#FF38BDF8"><Rectangle.RenderTransform><ScaleTransform ScaleY="0.4"/></Rectangle.RenderTransform></Rectangle>
+                                        </StackPanel>
+                                    </Border>
+                                    <StackPanel>
+                                        <TextBlock Text="02" Style="{StaticResource SectionNum}"/>
+                                        <TextBlock Text="Визуализация звука" Style="{StaticResource Section}"/>
+                                        <TextBlock Text="Полосы реагируют на звук устройства вывода Windows — колонки или наушники. Они не изменяют звук." Style="{StaticResource Hint}" Margin="0"/>
+                                    </StackPanel>
+                                </DockPanel>
+                                <CheckBox x:Name="ShowAudioBarsCheckBox" Content="Показывать полосы над поиском" Style="{StaticResource SwitchRow}"/>
+                                <CheckBox x:Name="KeepAudioBarsVisibleCheckBox" Content="Оставлять полосы видимыми всегда (украшение)" Style="{StaticResource SwitchRow}"/>
+                                <Grid Margin="0,10,0,0">
+                                    <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+                                    <StackPanel Grid.Column="0" Margin="0,0,12,0">
+                                        <TextBlock Text="Цвет полос" Style="{StaticResource Label}"/>
+                                        <ComboBox x:Name="AudioColorComboBox" Style="{StaticResource DarkComboBoxStyle}" Padding="12,9">
+                                            <ComboBoxItem Content="Голубой" Tag="#38BDF8"/><ComboBoxItem Content="Бирюзовый" Tag="#2DD4BF"/>
+                                            <ComboBoxItem Content="Зелёный" Tag="#4ADE80"/><ComboBoxItem Content="Фиолетовый" Tag="#A78BFA"/>
+                                            <ComboBoxItem Content="Розовый" Tag="#FB7185"/>
+                                        </ComboBox>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="1">
+                                        <TextBlock Text="Количество полос" Style="{StaticResource Label}"/>
+                                        <ComboBox x:Name="AudioCountComboBox" Style="{StaticResource DarkComboBoxStyle}" Padding="12,9">
+                                            <ComboBoxItem Content="24 · компактно" Tag="24"/><ComboBoxItem Content="36 · средне" Tag="36"/>
+                                            <ComboBoxItem Content="48 · подробно" Tag="48"/>
+                                        </ComboBox>
+                                    </StackPanel>
+                                </Grid>
+                                <Border Style="{StaticResource Divider}"/>
+                                <CheckBox x:Name="OverlayEnabledCheckBox" Content="Постоянный эквалайзер на экране — украшение без поиска" Style="{StaticResource SwitchRow}"
+                                          Checked="OverlayEnabled_Changed" Unchecked="OverlayEnabled_Changed"/>
+                                <StackPanel x:Name="OverlayOptionsPanel" Style="{StaticResource FadePanel}" Margin="0,4,0,0" IsEnabled="False">
+                                    <Border BorderBrush="#33FFFFFF" BorderThickness="2,0,0,0" Padding="16,0,0,0" Margin="4,0,0,0">
+                                        <StackPanel>
+                                            <CheckBox x:Name="OverlayTopmostCheckBox" Content="Поверх всех окон" Style="{StaticResource SwitchRow}"/>
+                                            <TextBlock Text="Ширина полосы" Style="{StaticResource Label}" Margin="2,8,0,7"/>
+                                            <ComboBox x:Name="OverlayWidthComboBox" Style="{StaticResource DarkComboBoxStyle}" Padding="12,9">
+                                                <ComboBoxItem Content="50 % экрана" Tag="50"/>
+                                                <ComboBoxItem Content="70 % экрана" Tag="70"/>
+                                                <ComboBoxItem Content="85 % экрана" Tag="85"/>
+                                                <ComboBoxItem Content="92 % экрана" Tag="92"/>
+                                                <ComboBoxItem Content="Во всю ширину" Tag="100"/>
+                                            </ComboBox>
+                                            <TextBlock Text="Включено — полосы всегда на виду поверх окон и не мешают кликам. Выключено — полосы не лежат поверх окон: их видно на рабочем столе, когда окна свёрнуты или закрыты." Style="{StaticResource Hint}" Margin="0,10,0,0"/>
+                                        </StackPanel>
+                                    </Border>
+                                </StackPanel>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- 03 Background -->
+                        <Border x:Name="CardBackground" Style="{StaticResource Card}">
+                            <StackPanel>
+                                <DockPanel Margin="0,0,0,14">
+                                    <Border Style="{StaticResource Badge}" Background="{StaticResource BadgePink}">
+                                        <Control Style="{StaticResource BadgeIcon}" Tag="{StaticResource IcoImage}"/>
+                                    </Border>
+                                    <StackPanel>
+                                        <TextBlock Text="03" Style="{StaticResource SectionNum}"/>
+                                        <TextBlock Text="Фон приложения" Style="{StaticResource Section}"/>
+                                        <TextBlock Text="Свои обои для окна поиска и настроек. Поверх картинки идёт тёмная полупрозрачная прослойка, чтобы текст всегда читался." Style="{StaticResource Hint}" Margin="0"/>
+                                    </StackPanel>
+                                </DockPanel>
+                                <Border Background="#33000000" BorderBrush="#1FFFFFFF" BorderThickness="1" CornerRadius="14" Padding="14,12" Margin="0,0,0,14">
+                                    <DockPanel>
+                                        <StackPanel Orientation="Horizontal" DockPanel.Dock="Right">
+                                            <Button Style="{StaticResource GhostButton}" Margin="0,0,8,0" Click="ChooseBackground_Click">
+                                                <StackPanel Orientation="Horizontal">
+                                                    <Control Style="{StaticResource Ico}" Tag="{StaticResource IcoFolder}" Width="15" Height="15" Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}" Margin="0,1,8,0" VerticalAlignment="Center"/>
+                                                    <TextBlock Text="Выбрать…" VerticalAlignment="Center"/>
+                                                </StackPanel>
+                                            </Button>
+                                            <Button Style="{StaticResource GhostButton}" Padding="14,10" ToolTip="Убрать картинку" Click="ClearBackground_Click">
+                                                <Control Style="{StaticResource Ico}" Tag="{StaticResource IcoTrash}" Width="15" Height="15" Foreground="{Binding Foreground, RelativeSource={RelativeSource AncestorType=Button}}"/>
+                                            </Button>
+                                        </StackPanel>
+                                        <Control Style="{StaticResource Ico}" Tag="{StaticResource IcoImage}" Width="19" Height="19" Foreground="#FFF472B6" VerticalAlignment="Center" Margin="2,0,12,0"/>
+                                        <TextBlock x:Name="BackgroundNameText" Text="Картинка не выбрана" Foreground="#FFE2E8F0" FontSize="13.5"
+                                                   VerticalAlignment="Center" TextTrimming="CharacterEllipsis"/>
+                                    </DockPanel>
+                                </Border>
+                                <TextBlock Text="Затемнение поверх картинки" Style="{StaticResource Label}"/>
+                                <ComboBox x:Name="BackgroundDimComboBox" Style="{StaticResource DarkComboBoxStyle}" Padding="12,9">
+                                    <ComboBoxItem Content="Слабое · 55 %" Tag="55"/>
+                                    <ComboBoxItem Content="Среднее · 75 %" Tag="75"/>
+                                    <ComboBoxItem Content="Сильное · 88 %" Tag="88"/>
+                                </ComboBox>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- 04 Interface -->
+                        <Border x:Name="CardInterface" Style="{StaticResource Card}">
+                            <StackPanel>
+                                <DockPanel Margin="0,0,0,14">
+                                    <Border Style="{StaticResource Badge}" Background="{StaticResource BadgeGreen}">
+                                        <Control Style="{StaticResource BadgeIcon}" Tag="{StaticResource IcoBrush}"/>
+                                    </Border>
+                                    <StackPanel>
+                                        <TextBlock Text="04" Style="{StaticResource SectionNum}"/>
+                                        <TextBlock Text="Интерфейс" Style="{StaticResource Section}"/>
+                                        <TextBlock Text="Размер окна, виджет с музыкой и автозапуск." Style="{StaticResource Hint}" Margin="0"/>
+                                    </StackPanel>
+                                </DockPanel>
+                                <TextBlock Text="Размер окна результатов" Style="{StaticResource Label}"/>
+                                <StackPanel Orientation="Horizontal" Margin="0,0,0,12">
+                                    <RadioButton x:Name="SmallSizeRadio" Content="Компактный" GroupName="WindowSize" Style="{StaticResource SegChip}"/>
+                                    <RadioButton x:Name="MediumSizeRadio" Content="Средний" GroupName="WindowSize" Style="{StaticResource SegChip}"/>
+                                    <RadioButton x:Name="LargeSizeRadio" Content="Большой" GroupName="WindowSize" Style="{StaticResource SegChip}"/>
+                                </StackPanel>
+                                <CheckBox x:Name="ShowNowPlayingCheckBox" Content="Показывать текущий трек" Style="{StaticResource SwitchRow}"/>
+                                <CheckBox x:Name="AutoStartCheckBox" Content="Запускать вместе с Windows" Style="{StaticResource SwitchRow}"/>
+                            </StackPanel>
+                        </Border>
+
+                        <!-- 05 Web search -->
+                        <Border x:Name="CardWeb" Style="{StaticResource Card}">
+                            <StackPanel>
+                                <DockPanel Margin="0,0,0,14">
+                                    <Border Style="{StaticResource Badge}" Background="{StaticResource BadgeAmber}">
+                                        <Control Style="{StaticResource BadgeIcon}" Tag="{StaticResource IcoGlobe}"/>
+                                    </Border>
+                                    <StackPanel>
+                                        <TextBlock Text="05" Style="{StaticResource SectionNum}"/>
+                                        <TextBlock Text="Поиск в интернете" Style="{StaticResource Section}"/>
+                                        <TextBlock Text="Где искать и в каком браузере открывать результаты." Style="{StaticResource Hint}" Margin="0"/>
+                                    </StackPanel>
+                                </DockPanel>
+                                <Grid>
+                                    <Grid.ColumnDefinitions><ColumnDefinition Width="*"/><ColumnDefinition Width="*"/></Grid.ColumnDefinitions>
+                                    <StackPanel Grid.Column="0" Margin="0,0,12,0">
+                                        <StackPanel Orientation="Horizontal" Margin="2,0,0,7">
+                                            <Control Style="{StaticResource Ico}" Tag="{StaticResource IcoSearch}" Width="15" Height="15" Foreground="#FF55D3F7" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                                            <TextBlock Text="Поисковая система" Style="{StaticResource Label}" Margin="0"/>
+                                        </StackPanel>
+                                        <ComboBox x:Name="SearchEngineComboBox" Style="{StaticResource DarkComboBoxStyle}" Padding="12,9">
+                                            <ComboBoxItem Content="Google"/><ComboBoxItem Content="Bing"/><ComboBoxItem Content="DuckDuckGo"/><ComboBoxItem Content="Yandex"/>
+                                        </ComboBox>
+                                    </StackPanel>
+                                    <StackPanel Grid.Column="1">
+                                        <StackPanel Orientation="Horizontal" Margin="2,0,0,7">
+                                            <Control Style="{StaticResource Ico}" Tag="{StaticResource IcoCompass}" Width="15" Height="15" Foreground="#FF55D3F7" Margin="0,0,8,0" VerticalAlignment="Center"/>
+                                            <TextBlock Text="Браузер для открытия результатов" Style="{StaticResource Label}" Margin="0"/>
+                                        </StackPanel>
+                                        <ComboBox x:Name="BrowserComboBox" Style="{StaticResource DarkComboBoxStyle}" Padding="12,9"/>
+                                    </StackPanel>
+                                </Grid>
+                            </StackPanel>
+                        </Border>
+                    </StackPanel>
+                </ScrollViewer>
+            </Grid>
+
+            <!-- Footer -->
+            <Grid x:Name="Footer" Grid.Row="2" Margin="0,18,0,0">
+                <StackPanel Orientation="Horizontal" VerticalAlignment="Center">
+                    <Border Background="#1AFFFFFF" CornerRadius="6" Padding="7,2" Margin="0,0,6,0"><TextBlock Text="Esc" Foreground="#FFD5DCE6" FontSize="11.5" FontWeight="SemiBold"/></Border>
+                    <TextBlock Text="закрыть" Foreground="#FF8B9AB0" FontSize="12.5" VerticalAlignment="Center" Margin="0,0,14,0"/>
+                    <Border Background="#1AFFFFFF" CornerRadius="6" Padding="7,2" Margin="0,0,6,0"><TextBlock Text="Ctrl + S" Foreground="#FFD5DCE6" FontSize="11.5" FontWeight="SemiBold"/></Border>
+                    <TextBlock Text="сохранить" Foreground="#FF8B9AB0" FontSize="12.5" VerticalAlignment="Center"/>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal" HorizontalAlignment="Right">
+                    <Button Content="Отмена" Style="{StaticResource GhostButton}" Margin="0,0,10,0" Click="CancelButton_Click"/>
+                    <Button Content="Сохранить" Style="{StaticResource SaveButton}" Click="SaveButton_Click"/>
+                </StackPanel>
+            </Grid>
+        </Grid>
+    </Grid>
+</Window>
