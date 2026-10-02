@@ -57,19 +57,19 @@
 
 | Окно поиска | Настройки: диски |
 |---|---|
-| <img src="demoassets/screenshots/search-window.png" width="420"> | <img src="demoassets/screenshots/settings-disks.png" width="420"> |
+| <img src="demov1/demoassets/screenshots/search-window.png" width="420"> | <img src="demov1/demoassets/screenshots/settings-disks.png" width="420"> |
 
 | Настройки: звук | Настройки: фон |
 |---|---|
-| <img src="demoassets/screenshots/settings-sound.png" width="420"> | <img src="demoassets/screenshots/settings-background.png" width="420"> |
+| <img src="demov1/demoassets/screenshots/settings-sound.png" width="420"> | <img src="demov1/demoassets/screenshots/settings-background.png" width="420"> |
 
 | Настройки: интерфейс | Настройки: интернет |
 |---|---|
-| <img src="demoassets/screenshots/settings-interface.png" width="420"> | <img src="demoassets/screenshots/settings-internet.png" width="420"> |
+| <img src="demov1/demoassets/screenshots/settings-interface.png" width="420"> | <img src="demov1/demoassets/screenshots/settings-internet.png" width="420"> |
 
 ### 🎬 Демо
 
-<img src="demoassets/demo.gif" alt="QuickSearch в работе" width="840">
+<img src="demov1/demoassets/demo.gif" alt="QuickSearch в работе" width="840">
 
 ---
 
