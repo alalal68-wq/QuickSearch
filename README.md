@@ -26,6 +26,7 @@
 [![Скачать QuickSearch](https://img.shields.io/badge/⬇_Скачать_QuickSearch-v1.0.0-34D399?style=for-the-badge&logo=github&logoColor=white)](https://github.com/alalal68-wq/QuickSearch/releases/download/v1.0.0/QuickSearch-v1.0.0.zip)
 ## 📑 Содержание
 
+- [Скриншоты и демо](#-скриншоты)
 - [О проекте](#-о-проекте)
 - [Возможности](#-возможности)
 - [Горячие клавиши](#-горячие-клавиши)
@@ -52,15 +53,23 @@
 
 Маскот проекта — чёрный котик 🐈‍⬛, он же иконка приложения.
 
-<!--
-  Скриншоты: положи картинки в assets/screenshots/ и раскомментируй блок ниже.
-
 ## 🖼 Скриншоты
 
-| Окно поиска | Настройки |
+| Окно поиска | Настройки: диски |
 |---|---|
-| <img src="assets/screenshots/search.png" width="420"> | <img src="assets/screenshots/settings.png" width="420"> |
--->
+| <img src="demoassets/screenshots/search-window.png" width="420"> | <img src="demoassets/screenshots/settings-disks.png" width="420"> |
+
+| Настройки: звук | Настройки: фон |
+|---|---|
+| <img src="demoassets/screenshots/settings-sound.png" width="420"> | <img src="demoassets/screenshots/settings-background.png" width="420"> |
+
+| Настройки: интерфейс | Настройки: интернет |
+|---|---|
+| <img src="demoassets/screenshots/settings-interface.png" width="420"> | <img src="demoassets/screenshots/settings-internet.png" width="420"> |
+
+### 🎬 Демо
+
+<img src="demoassets/demo.gif" alt="QuickSearch в работе" width="840">
 
 ---
 
